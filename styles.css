@@ -38,21 +38,21 @@ h1 {
 
 #game-board {
     display: grid;
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(5, auto);
+    grid-template-rows: repeat(6, auto);
     gap: 5px;
     flex: 0 1 auto;
+    justify-content: center;
+    justify-items: center;
 }
 
 .row {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 5px;
+    display: contents;
 }
 
 .tile {
-    width: 100%;
-    height: 100%;
-    max-height: 62px;
+    width: 62px;
+    height: 62px;
     border: 2px solid rgba(255,255,255,0.3);
     background: rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
@@ -220,6 +220,27 @@ h1 {
     max-width: 400px;
     width: 90%;
     animation: modalSlide 0.3s ease;
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: #999;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: color 0.2s, background 0.2s;
+}
+
+.modal-close:hover {
+    color: #333;
+    background: rgba(0,0,0,0.08);
 }
 
 @keyframes modalSlide {
@@ -278,6 +299,11 @@ h1 {
     transform: translateY(0);
 }
 
+.new-game-btn {
+    width: 100%;
+    margin-top: 0;
+}
+
 @media (max-height: 550px) {
     h1 {
         font-size: 1.3rem;
@@ -294,12 +320,9 @@ h1 {
         gap: 2px;
     }
     
-    .row {
-        gap: 2px;
-    }
-    
     .tile {
-        max-height: 35px;
+        width: 35px;
+        height: 35px;
         border-width: 1px;
     }
     
@@ -339,12 +362,9 @@ h1 {
         gap: 2px;
     }
     
-    .row {
-        gap: 2px;
-    }
-    
     .tile {
-        max-height: 28px;
+        width: 28px;
+        height: 28px;
         border-width: 1px;
         border-radius: 4px;
     }
@@ -385,12 +405,9 @@ h1 {
         gap: 4px;
     }
     
-    .row {
-        gap: 4px;
-    }
-    
     .tile {
-        max-height: 50px;
+        width: 50px;
+        height: 50px;
     }
     
     .key {
@@ -420,12 +437,9 @@ h1 {
         gap: 4px;
     }
     
-    .row {
-        gap: 4px;
-    }
-    
     .tile {
-        max-height: 55px;
+        width: 55px;
+        height: 55px;
     }
     
     .key {
@@ -449,12 +463,9 @@ h1 {
         gap: 3px;
     }
     
-    .row {
-        gap: 3px;
-    }
-    
     .tile {
-        max-height: 45px;
+        width: 45px;
+        height: 45px;
     }
     
     .key {
