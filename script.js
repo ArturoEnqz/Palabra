@@ -147,18 +147,42 @@ const KEYBOARD_LAYOUT = [
 let targetWord = WORDS[Math.floor(Math.random() * WORDS.length)];
 let currentRow = 0;
 let currentTile = 0;
-let currentGuess = '';
+let currentGuess = ['', '', '', '', ''];
 let gameOver = false;
 let startTime = Date.now();
+
+// Racha de victorias con localStorage
+let streak = parseInt(localStorage.getItem('palabra-streak') || '0', 10);
 
 const gameBoard = document.getElementById('game-board');
 const keyboard = document.getElementById('keyboard');
 const messageEl = document.getElementById('message');
 
+function saveStreak() {
+    localStorage.setItem('palabra-streak', streak.toString());
+}
+
+function formatTime(totalSeconds) {
+    const h = Math.floor(totalSeconds / 3600);
+    const m = Math.floor((totalSeconds % 3600) / 60);
+    const s = totalSeconds % 60;
+    if (h > 0) return `${h}h ${m}m ${s}s`;
+    if (m > 0) return `${m}m ${s}s`;
+    return `${s} segundos`;
+}
+
 function init() {
     createBoard();
     createKeyboard();
+    createStreakDisplay();
     document.addEventListener('keydown', handleKeyPress);
+}
+
+function createStreakDisplay() {
+    const el = document.createElement('div');
+    el.id = 'streak-display';
+    el.textContent = `🔥 Racha: ${streak}`;
+    document.querySelector('header').appendChild(el);
 }
 
 function createBoard() {
@@ -169,10 +193,25 @@ function createBoard() {
             const tile = document.createElement('div');
             tile.className = 'tile';
             tile.id = `tile-${i}-${j}`;
+            tile.addEventListener('click', () => selectTile(i, j));
             row.appendChild(tile);
         }
         gameBoard.appendChild(row);
     }
+}
+
+function selectTile(row, col) {
+    if (gameOver || row !== currentRow) return;
+    currentTile = col;
+    updateSelectedTile();
+}
+
+function updateSelectedTile() {
+    // Quitar selección previa
+    document.querySelectorAll('.tile.selected').forEach(t => t.classList.remove('selected'));
+    if (gameOver) return;
+    const tile = document.getElementById(`tile-${currentRow}-${currentTile}`);
+    if (tile) tile.classList.add('selected');
 }
 
 function createKeyboard() {
@@ -221,8 +260,9 @@ function addLetter(letter) {
         const tile = document.getElementById(`tile-${currentRow}-${currentTile}`);
         tile.textContent = letter;
         tile.classList.add('filled');
-        currentGuess += letter;
+        currentGuess[currentTile] = letter;
         currentTile++;
+        updateSelectedTile();
     }
 }
 
@@ -232,41 +272,59 @@ function deleteLetter() {
         const tile = document.getElementById(`tile-${currentRow}-${currentTile}`);
         tile.textContent = '';
         tile.classList.remove('filled');
-        currentGuess = currentGuess.slice(0, -1);
+        currentGuess[currentTile] = '';
+        updateSelectedTile();
     }
 }
 
+function getGuessWord() {
+    return currentGuess.join('');
+}
+
+function isGuessComplete() {
+    return currentGuess.every(c => c !== '');
+}
+
 function submitGuess() {
-    if (currentTile !== 5) {
+    if (!isGuessComplete()) {
         showMessage('Palabra incompleta');
         return;
     }
 
-    if (!WORDS.includes(currentGuess)) {
+    const word = getGuessWord();
+
+    if (!WORDS.includes(word)) {
         showMessage('Palabra no válida');
         shakeTiles();
         return;
     }
 
-    checkGuess();
+    checkGuess(word);
 
-    if (currentGuess === targetWord) {
+    if (word === targetWord) {
         gameOver = true;
+        streak++;
+        saveStreak();
+        document.querySelectorAll('.tile.selected').forEach(t => t.classList.remove('selected'));
         setTimeout(() => showModal(true), 500);
         return;
     }
 
     currentRow++;
     currentTile = 0;
-    currentGuess = '';
+    currentGuess = ['', '', '', '', ''];
+    updateSelectedTile();
 
     if (currentRow === 6) {
         gameOver = true;
+        streak = 0;
+        saveStreak();
+        document.querySelectorAll('.tile.selected').forEach(t => t.classList.remove('selected'));
         setTimeout(() => showModal(false), 500);
     }
 }
 
-function checkGuess() {
+function checkGuess(word) {
     const letterCount = {};
     for (let letter of targetWord) {
         letterCount[letter] = (letterCount[letter] || 0) + 1;
@@ -275,22 +333,22 @@ function checkGuess() {
     const result = Array(5).fill('absent');
 
     for (let i = 0; i < 5; i++) {
-        if (currentGuess[i] === targetWord[i]) {
+        if (word[i] === targetWord[i]) {
             result[i] = 'correct';
-            letterCount[currentGuess[i]]--;
+            letterCount[word[i]]--;
         }
     }
 
     for (let i = 0; i < 5; i++) {
-        if (result[i] === 'absent' && targetWord.includes(currentGuess[i]) && letterCount[currentGuess[i]] > 0) {
+        if (result[i] === 'absent' && targetWord.includes(word[i]) && letterCount[word[i]] > 0) {
             result[i] = 'present';
-            letterCount[currentGuess[i]]--;
+            letterCount[word[i]]--;
         }
     }
 
     for (let i = 0; i < 5; i++) {
         const tile = document.getElementById(`tile-${currentRow}-${i}`);
-        const letter = currentGuess[i];
+        const letter = word[i];
 
         setTimeout(() => {
             tile.classList.add(result[i]);
@@ -337,6 +395,7 @@ function showMessage(text) {
 
 function showModal(won) {
     const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    const timeStr = formatTime(elapsed);
     const modal = document.createElement('div');
     modal.className = 'modal-overlay';
 
@@ -347,7 +406,8 @@ function showModal(won) {
         content.innerHTML = `
             <button class="modal-close" aria-label="Cerrar">✕</button>
             <h2>🎉 ¡Felicidades! 🎉</h2>
-            <p class="time">Tiempo: ${elapsed} segundos</p>
+            <p class="time">Tiempo: ${timeStr}</p>
+            <p class="streak">🔥 Racha: ${streak} victoria${streak !== 1 ? 's' : ''} seguida${streak !== 1 ? 's' : ''}</p>
             <button class="restart-btn" onclick="location.reload()">Jugar de nuevo</button>
         `;
     } else {
@@ -355,7 +415,8 @@ function showModal(won) {
             <button class="modal-close" aria-label="Cerrar">✕</button>
             <h2>😔 Perdiste</h2>
             <p class="word">La palabra era: <strong>${targetWord}</strong></p>
-            <p class="time">Tiempo: ${elapsed} segundos</p>
+            <p class="time">Tiempo: ${timeStr}</p>
+            <p class="streak">🔥 Racha perdida</p>
             <button class="restart-btn" onclick="location.reload()">Jugar de nuevo</button>
         `;
     }
