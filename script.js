@@ -6,7 +6,8 @@ const WORDS = [
     'ANGEL', 'ANIMO', 'ANODO', 'ANSIA', 'ANTES', 'ANUAL', 'AORTA', 'APICE', 'APODO',
     'APOYO', 'ARADO', 'ARBOL', 'ARCOS', 'ARDER', 'ARDOR', 'ARDUO', 'AREAS', 'ARENA',
     'ARIDO', 'ARMAR', 'ARMAS', 'AROMA', 'ARROZ', 'ARTES', 'ASADO', 'ASEAR', 'ASILO',
-    'ASOMO', 'ASTAS', 'ASTRO', 'ATAJO', 'ATLAS', 'ATOMO', 'ATRIL', 'ATROZ', 'AUDAZ',
+    'ASOMO', 'ASTAS', 'ASTRO', 'ATAJO', 'ATLAS', 'ATRAS', 'ATOMO', 'ATRIL', 'ATROZ', 
+    'AUDAZ',
     'AULAS', 'AUTOS', 'AVENA', 'AVION', 'AVISO', 'AYUDA', 'AYUNO', 'AZOTE',
     'BAHIA', 'BAILE', 'BAJAR', 'BAJOS', 'BALAS', 'BALDE', 'BALSA', 'BANCO', 'BANDA',
     'BARCO', 'BARES', 'BARON', 'BARRO', 'BASES', 'BASTA', 'BASTO', 'BATAS', 'BATEA',
@@ -27,7 +28,8 @@ const WORDS = [
     'CIELO', 'CIENO', 'CIFRA', 'CINCO', 'CINTA', 'CIRCO', 'CISNE', 'CITAR', 'CIVIL',
     'CLARA', 'CLARO', 'CLASE', 'CLAVE', 'CLAVO', 'CLIMA', 'CLORO', 'COBRA', 'COBRE',
     'COCER', 'COCOS', 'COCHE', 'CODOS', 'COFRE', 'COGER', 'COLAR', 'COLES', 'COLMO',
-    'COLON', 'COLOR', 'COMAS', 'COMBA', 'COMBO', 'COMER', 'COMIC', 'CONDE', 'CONGA',
+    'COLON', 'COLOR', 'COMAS', 'COMAL', 'COMBA', 'COMBO', 'COMER', 'COMIC', 'COMUN', 
+    'CONDE', 'CONGA',
     'CONOS', 'COPAL', 'COPAS', 'COPIA', 'CORAL', 'CORAN', 'COROS', 'CORTA', 'CORTE',
     'CORTO', 'CORZO', 'COSAS', 'COSER', 'COSTA', 'COSTE', 'COSTO', 'COTOS', 'CREAR',
     'CREER', 'CREMA', 'CRIBA', 'CRUDO', 'CRUEL', 'CRUZA', 'CUAJO', 'CUBAS', 'CUBOS',
@@ -53,7 +55,8 @@ const WORDS = [
     'GORDO', 'GORRA', 'GORRO', 'GOTAS', 'GOZAR', 'GRADO', 'GRAMO', 'GRANO', 'GRAPA',
     'GRASA', 'GRAVA', 'GRAVE', 'GREDA', 'GRIFO', 'GRIPE', 'GRITO', 'GRUTA', 'GUANO',
     'GUAPO', 'GUATA', 'GUIAR', 'GUIAS', 'GUION', 'GUISO', 'GUSTO',
-    'HABER', 'HABIL', 'HABLA', 'HACHA', 'HADAS', 'HALAR', 'HARTO', 'HASTA', 'HECHO',
+    'HABER', 'HABIL', 'HABLA', 'HACER', 'HACHA', 'HADAS', 'HALAR', 'HARTO', 'HASTA', 
+    'HECHO',
     'HEDOR', 'HELAR', 'HELIO', 'HENNA', 'HERIR', 'HEROE', 'HIELO', 'HILOS', 'HOGAR',
     'HOJAS', 'HONGO', 'HONOR', 'HORAS', 'HORNO', 'HOSCO', 'HOTEL', 'HUCHA', 'HUECO',
     'HUELE', 'HUESO', 'HUEVO', 'HUIDA', 'HUMOR', 'HUMUS',
@@ -68,11 +71,13 @@ const WORDS = [
     'LAUDO', 'LAVAR', 'LAZOS', 'LECHO', 'LECHE', 'LEGAL', 'LEGUA', 'LEJOS', 'LENTO',
     'LEPRA', 'LETRA', 'LEVES', 'LIBAR', 'LIBRO', 'LICEO', 'LICOR', 'LIDIA', 'LIGAR',
     'LIMBO', 'LIMON', 'LINCE', 'LINDO', 'LINEA', 'LIRIO', 'LISTA', 'LISTO', 'LITRO',
-    'LLAGA', 'LLAMA', 'LLANO', 'LLAVE', 'LLENO', 'LLORO', 'LOBOS', 'LOCOS', 'LOGIA',
+    'LLAGA', 'LLAMA', 'LLANO', 'LLAVE', 'LLENO', 'LLORO', 'LOBOS', 'LOCAL', 'LOCOS',
+    'LOGIA',
     'LOGRO', 'LOMOS', 'LONAS', 'LOROS', 'LOTES', 'LUCHA', 'LUCIR', 'LUEGO', 'LUGAR',
     'LUJOS', 'LUNAR', 'LUNES',
     'MACHO', 'MACRO', 'MADRE', 'MAFIA', 'MAGIA', 'MAGMA', 'MAGOS', 'MAJAR', 'MALES',
-    'MALLA', 'MALVA', 'MAMAS', 'MANDO', 'MANGO', 'MANIA', 'MANOS', 'MANTA', 'MANTO',
+    'MALLA', 'MALTA', 'MALVA', 'MAMAS', 'MANDO', 'MANGO', 'MANIA', 'MANOS', 'MANTA', 
+    'MANTO',
     'MAPAS', 'MARCA', 'MARCO', 'MAREA', 'MARTE', 'MARZO', 'MASAS', 'MATAR', 'MATIZ',
     'MAULA', 'MAYOR', 'MEDIA', 'MEDIO', 'MEJOR', 'MELON', 'MENOR', 'MENOS', 'MENTA',
     'MERMA', 'MESAS', 'MESON', 'METAL', 'METER', 'METRO', 'MICRO', 'MIEDO', 'MIMAR',
@@ -87,7 +92,8 @@ const WORDS = [
     'OBRAS', 'OBESO', 'OBRAR', 'OBVIO', 'OCEAN', 'OCASO', 'OCHOS', 'ODIAR', 'OESTE',
     'OIDOS', 'OJEAR', 'OLIVO', 'OLLAS', 'OMEGA', 'ONDAS', 'OPACO', 'OPERA', 'OPTAR',
     'ORDEN', 'OREJA', 'ORUJO', 'OSADO', 'OTEAR', 'OTRAS', 'OTROS', 'OVEJA', 'OXIDO',
-    'PACTO', 'PADRE', 'PAGAR', 'PAGOS', 'PALAS', 'PALCO', 'PALMA', 'PANDA', 'PANES',
+    'PACTO', 'PADRE', 'PAGAR', 'PAGOS', 'PALAS', 'PALCO', 'PALMA', 'PALOS', 'PANDA', 
+    'PANES',
     'PANEL', 'PAPAL', 'PAPEL', 'PARED', 'PARES', 'PARIA', 'PARIS', 'PARRA', 'PARTE',
     'PASAR', 'PASEO', 'PASOS', 'PASTA', 'PASTO', 'PATOS', 'PAUSA', 'PAUTA', 'PEAJE',
     'PECHO', 'PEDIR', 'PEGAR', 'PEINE', 'PELAR', 'PENAL', 'PENAS', 'PERLA', 'PEROL',
@@ -105,7 +111,8 @@ const WORDS = [
     'REMOS', 'RENAL', 'RENTA', 'RESTO', 'RETAR', 'RETOS', 'REZAR', 'RIADA', 'RICOS',
     'RIEGO', 'RIFLE', 'RIGOR', 'RIMAR', 'RISAS', 'RITMO', 'RIVAL', 'ROBAR', 'ROBLE',
     'ROCAS', 'ROCIO', 'RODAR', 'RODEO', 'ROGAR', 'ROJOS', 'ROLLO', 'RONCO', 'RONDA',
-    'ROPAS', 'ROSCA', 'ROSAS', 'ROTOS', 'RUBIO', 'RUBOR', 'RUEDA', 'RUIDO', 'RUINA',
+    'ROPAS', 'ROSCA', 'ROSAS', 'ROTAR', 'ROTOS', 'RUBIO', 'RUBOR', 'RUEDA', 'RUIDO', 
+    'RUINA',
     'RUMBA', 'RUMBO', 'RUMOR', 'RURAL', 'RUTAS',
     'SABER', 'SABIO', 'SABOR', 'SABLE', 'SACAR', 'SACOS', 'SAETA', 'SAGAZ', 'SALAS',
     'SALES', 'SALIR', 'SALMO', 'SALSA', 'SALUD', 'SALVO', 'SAMBA', 'SANAR', 'SANTO',
@@ -267,7 +274,14 @@ function addLetter(letter) {
 }
 
 function deleteLetter() {
-    if (currentTile > 0) {
+    if (currentGuess[currentTile] !== '') {
+        // La casilla actual tiene letra: borrarla sin moverse
+        const tile = document.getElementById(`tile-${currentRow}-${currentTile}`);
+        tile.textContent = '';
+        tile.classList.remove('filled');
+        currentGuess[currentTile] = '';
+    } else if (currentTile > 0) {
+        // La casilla actual está vacía: retroceder y borrar la anterior
         currentTile--;
         const tile = document.getElementById(`tile-${currentRow}-${currentTile}`);
         tile.textContent = '';
