@@ -8,9 +8,11 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .container {
@@ -19,8 +21,9 @@ body {
     padding: 15px;
     display: flex;
     flex-direction: column;
-    max-height: 100vh;
-    gap: 15px;
+    height: 100vh;
+    height: 100dvh;
+    gap: 12px;
 }
 
 header {
@@ -47,9 +50,11 @@ h1 {
     grid-template-columns: repeat(5, auto);
     grid-template-rows: repeat(6, auto);
     gap: 5px;
-    flex: 0 1 auto;
+    flex: 1 1 auto;
     justify-content: center;
     justify-items: center;
+    align-content: center;
+    min-height: 0;
 }
 
 .row {
@@ -57,15 +62,15 @@ h1 {
 }
 
 .tile {
-    width: 62px;
-    height: 62px;
+    width: clamp(40px, 12vw, 62px);
+    height: clamp(40px, 12vw, 62px);
     border: 2px solid rgba(255,255,255,0.3);
     background: rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: clamp(1rem, 4vw, 2rem);
+    font-size: clamp(1.1rem, 5vw, 2rem);
     font-weight: bold;
     color: white;
     text-transform: uppercase;
@@ -118,8 +123,9 @@ h1 {
 #keyboard {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
     flex-shrink: 0;
+    width: 100%;
 }
 
 .keyboard-row {
@@ -181,6 +187,7 @@ h1 {
     font-weight: bold;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     animation: slideDown 0.3s ease;
+    z-index: 500;
 }
 
 .message.hidden {
@@ -324,43 +331,152 @@ h1 {
     margin-top: 0;
 }
 
-@media (max-height: 550px) {
-    h1 {
-        font-size: 1.3rem;
-        letter-spacing: 2px;
-        margin: 2px 0;
-    }
-    
+/* ── Mobile: ancho < 500px ── */
+@media (max-width: 500px) {
     .container {
+        padding: 8px;
+        gap: 8px;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+        letter-spacing: 4px;
+        margin: 4px 0;
+    }
+
+    #streak-display {
+        font-size: 0.85rem;
+    }
+
+    #game-board {
+        gap: 4px;
+    }
+
+    .tile {
+        width: clamp(42px, 16vw, 56px);
+        height: clamp(42px, 16vw, 56px);
+    }
+
+    .key {
+        flex: 1;
+        min-width: 0;
+        padding: 14px 0;
+        font-size: 1.05rem;
+        border-radius: 6px;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .key.wide {
+        flex: 1.5;
+        min-width: 0;
+        font-size: 0.75rem;
+        padding: 14px 0;
+    }
+
+    .keyboard-row {
+        gap: 4px;
+    }
+
+    #keyboard {
         gap: 5px;
+        padding: 0 2px;
+    }
+}
+
+/* ── Móviles pequeños en landscape o pantallas muy cortas ── */
+@media (max-height: 750px) {
+    .container {
+        gap: 6px;
         padding: 8px;
     }
-    
+
+    h1 {
+        font-size: 1.6rem;
+        letter-spacing: 4px;
+        margin: 2px 0;
+    }
+
+    .tile {
+        width: clamp(36px, 8vh, 55px);
+        height: clamp(36px, 8vh, 55px);
+    }
+
+    #game-board {
+        gap: 3px;
+    }
+}
+
+@media (max-height: 650px) {
+    h1 {
+        font-size: 1.3rem;
+        letter-spacing: 3px;
+        margin: 1px 0;
+    }
+
+    .container {
+        gap: 4px;
+        padding: 5px;
+    }
+
+    .tile {
+        width: clamp(30px, 7vh, 45px);
+        height: clamp(30px, 7vh, 45px);
+    }
+
     #game-board {
         gap: 2px;
     }
-    
-    .tile {
-        width: 35px;
-        height: 35px;
-        border-width: 1px;
-    }
-    
+
     .key {
-        padding: 6px;
-        font-size: 0.75rem;
-        min-width: 24px;
+        padding: 10px 0;
+        font-size: 0.85rem;
     }
-    
+
     .key.wide {
-        min-width: 45px;
-        padding: 6px 4px;
+        font-size: 0.7rem;
     }
-    
+}
+
+@media (max-height: 550px) {
+    h1 {
+        font-size: 1.1rem;
+        letter-spacing: 2px;
+        margin: 0;
+    }
+
+    #streak-display {
+        font-size: 0.75rem;
+    }
+
+    .container {
+        gap: 3px;
+        padding: 4px;
+    }
+
+    .tile {
+        width: clamp(24px, 6vh, 35px);
+        height: clamp(24px, 6vh, 35px);
+        border-width: 1px;
+        border-radius: 4px;
+    }
+
+    #game-board {
+        gap: 2px;
+    }
+
+    .key {
+        padding: 7px 0;
+        font-size: 0.75rem;
+    }
+
+    .key.wide {
+        font-size: 0.65rem;
+    }
+
     #keyboard {
         gap: 3px;
     }
-    
+
     .keyboard-row {
         gap: 3px;
     }
@@ -368,132 +484,30 @@ h1 {
 
 @media (max-height: 450px) {
     h1 {
-        font-size: 1.1rem;
+        font-size: 1rem;
         letter-spacing: 1px;
-        margin: 1px 0;
     }
-    
-    .container {
-        gap: 3px;
-        padding: 5px;
-    }
-    
-    #game-board {
-        gap: 2px;
-    }
-    
+
     .tile {
-        width: 28px;
-        height: 28px;
-        border-width: 1px;
-        border-radius: 4px;
+        width: clamp(22px, 5vh, 28px);
+        height: clamp(22px, 5vh, 28px);
+        border-radius: 3px;
     }
-    
+
     .key {
-        padding: 5px;
+        padding: 5px 0;
         font-size: 0.7rem;
-        min-width: 22px;
     }
-    
+
     .key.wide {
-        min-width: 40px;
-        padding: 5px 3px;
+        font-size: 0.6rem;
     }
-    
+
     #keyboard {
         gap: 2px;
     }
-    
+
     .keyboard-row {
         gap: 2px;
-    }
-}
-
-@media (max-width: 500px) {
-    .container {
-        padding: 10px;
-        gap: 10px;
-    }
-    
-    h1 {
-        font-size: 1.8rem;
-        letter-spacing: 4px;
-        margin: 5px 0;
-    }
-    
-    #game-board {
-        gap: 4px;
-    }
-    
-    .tile {
-        width: 50px;
-        height: 50px;
-    }
-    
-    .key {
-        padding: 10px 8px;
-        min-width: 26px;
-        font-size: 0.85rem;
-    }
-    
-    .key.wide {
-        min-width: 50px;
-        padding: 10px 6px;
-    }
-}
-
-@media (max-height: 750px) {
-    .container {
-        gap: 10px;
-        padding: 10px;
-    }
-    
-    h1 {
-        font-size: 2rem;
-        margin: 5px 0;
-    }
-    
-    #game-board {
-        gap: 4px;
-    }
-    
-    .tile {
-        width: 55px;
-        height: 55px;
-    }
-    
-    .key {
-        padding: 10px;
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-height: 650px) {
-    .container {
-        gap: 8px;
-    }
-    
-    h1 {
-        font-size: 1.6rem;
-        letter-spacing: 4px;
-        margin: 3px 0;
-    }
-    
-    #game-board {
-        gap: 3px;
-    }
-    
-    .tile {
-        width: 45px;
-        height: 45px;
-    }
-    
-    .key {
-        padding: 8px;
-        font-size: 0.8rem;
-    }
-    
-    .key.wide {
-        padding: 8px 6px;
     }
 }

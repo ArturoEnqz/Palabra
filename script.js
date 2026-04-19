@@ -274,21 +274,16 @@ function addLetter(letter) {
 }
 
 function deleteLetter() {
-    if (currentGuess[currentTile] !== '') {
-        // La casilla actual tiene letra: borrarla sin moverse
-        const tile = document.getElementById(`tile-${currentRow}-${currentTile}`);
-        tile.textContent = '';
-        tile.classList.remove('filled');
-        currentGuess[currentTile] = '';
-    } else if (currentTile > 0) {
-        // La casilla actual está vacía: retroceder y borrar la anterior
+    if (currentTile >= 5) {
+        currentTile = 4;
+    } else if (currentGuess[currentTile] === '' && currentTile > 0) {
         currentTile--;
-        const tile = document.getElementById(`tile-${currentRow}-${currentTile}`);
-        tile.textContent = '';
-        tile.classList.remove('filled');
-        currentGuess[currentTile] = '';
-        updateSelectedTile();
     }
+    const tile = document.getElementById(`tile-${currentRow}-${currentTile}`);
+    tile.textContent = '';
+    tile.classList.remove('filled');
+    currentGuess[currentTile] = '';
+    updateSelectedTile();
 }
 
 function getGuessWord() {
