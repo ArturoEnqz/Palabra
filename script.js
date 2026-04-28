@@ -178,11 +178,25 @@ function formatTime(totalSeconds) {
     return `${s} segundos`;
 }
 
+function preventZoom() {
+    document.addEventListener('dblclick', e => e.preventDefault(), { passive: false });
+    
+    document.addEventListener('touchend', (e) => {
+        const now = Date.now();
+        if (now - (window.lastTouchEnd || 0) <= 300) {
+            e.preventDefault();
+        }
+        window.lastTouchEnd = now;
+    }, { passive: false });
+}
+
 function init() {
     createBoard();
     createKeyboard();
     createStreakDisplay();
     document.addEventListener('keydown', handleKeyPress);
+
+    preventZoom();
 }
 
 function createStreakDisplay() {
@@ -274,16 +288,21 @@ function addLetter(letter) {
 }
 
 function deleteLetter() {
-    if (currentTile >= 5) {
-        currentTile = 4;
-    } else if (currentGuess[currentTile] === '' && currentTile > 0) {
+    if (currentGuess[currentTile] !== '') {
+        // La casilla actual tiene letra: borrarla sin moverse
+        const tile = document.getElementById(`tile-${currentRow}-${currentTile}`);
+        tile.textContent = '';
+        tile.classList.remove('filled');
+        currentGuess[currentTile] = '';
+    } else if (currentTile > 0) {
+        // La casilla actual está vacía: retroceder y borrar la anterior
         currentTile--;
+        const tile = document.getElementById(`tile-${currentRow}-${currentTile}`);
+        tile.textContent = '';
+        tile.classList.remove('filled');
+        currentGuess[currentTile] = '';
+        updateSelectedTile();
     }
-    const tile = document.getElementById(`tile-${currentRow}-${currentTile}`);
-    tile.textContent = '';
-    tile.classList.remove('filled');
-    currentGuess[currentTile] = '';
-    updateSelectedTile();
 }
 
 function getGuessWord() {
